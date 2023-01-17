@@ -38,6 +38,7 @@ esac
 mkdir /home/runner/apt_repo
 
 # skip packages without version change
+sudo apt install -y python3-colcon-common-extensions
 git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
 python3 $GITHUB_ACTION_PATH/differential.py . Packages
 
