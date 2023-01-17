@@ -37,6 +37,10 @@ esac
 # make output directory
 mkdir /home/runner/apt_repo
 
+# skip packages without version change
+git checkout $DEB_DISTRO-$ROS_DISTRO -- Packages
+python3 $GITHUB_ACTION_PATH/differential.py
+
 echo "Add unreleased packages to rosdep"
 
 for PKG in $(catkin_topological_order --only-names); do
