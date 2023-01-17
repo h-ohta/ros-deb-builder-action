@@ -38,7 +38,9 @@ esac
 mkdir /home/runner/apt_repo
 
 # skip packages without version change
-sudo apt install -y python3-colcon-common-extensions
+echo "deb [arch=amd64,arm64 signed-by=/home/runner/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $DEB_DISTRO main" | sudo tee /etc/apt/sources.list.d/ros2-latest.list
+sudo apt-get update
+sudo apt-get install -y python3-colcon-common-extensions
 git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
 python3 $GITHUB_ACTION_PATH/differential.py . Packages
 
