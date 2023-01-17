@@ -6,8 +6,13 @@ set -ex
 echo "Install dependencies"
 
 sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/sbuild
-sudo apt update
-sudo apt install -y mmdebstrap distro-info debian-archive-keyring ccache curl vcstool python3-rosdep2 sbuild catkin python3-bloom
+sudo apt-get update
+sudo apt-get install -y mmdebstrap distro-info debian-archive-keyring ccache curl sbuild
+
+echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $DEB_DISTRO main" | sudo tee /etc/apt/sources.list.d/ros2-latest.list
+curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+sudo apt-get update
+sudo apt-get install -y python3-bloom python3-vcstool python3-rosdep python3-colcon-common-extensions
 
 echo "Setup build environment"
 

@@ -38,15 +38,12 @@ esac
 mkdir /home/runner/apt_repo
 
 # skip packages without version change
-echo "deb [arch=amd64,arm64 signed-by=/home/runner/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $DEB_DISTRO main" | sudo tee /etc/apt/sources.list.d/ros2-latest.list
-sudo apt-get update
-sudo apt-get install -y python3-colcon-common-extensions
 git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
 python3 $GITHUB_ACTION_PATH/differential.py . Packages
 
 echo "Add unreleased packages to rosdep"
 
-for PKG in $(catkin_topological_order --only-names); do
+for PKG in $(colcon list -tn); do
   printf "%s:\n  %s:\n  - %s\n" "$PKG" "$DISTRIBUTION" "ros-$ROS_DEB$(printf '%s' "$PKG" | tr '_' '-')" >> /home/runner/apt_repo/local.yaml
 done
 echo "yaml file:///home/runner/apt_repo/local.yaml $ROS_DISTRO" | sudo tee /etc/ros/rosdep/sources.list.d/1-local.list
@@ -59,11 +56,11 @@ echo "Run sbuild"
 # Don't build tests
 export DEB_BUILD_OPTIONS=nocheck
 
-TOTAL="$(catkin_topological_order --only-names | wc -l)"
+TOTAL="$(colcon list -tn | wc -l)"
 COUNT=1
 
 # TODO: use colcon list -tp in future
-for PKG_PATH in $(catkin_topological_order --only-folders); do
+for PKG_PATH in $(colcon list -tp); do
   echo "::group::Building $COUNT/$TOTAL: $PKG_PATH"
   test -f "$PKG_PATH/CATKIN_IGNORE" && echo "Skipped" && continue
   test -f "$PKG_PATH/COLCON_IGNORE" && echo "Skipped" && continue
