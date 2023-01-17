@@ -28,8 +28,8 @@ def check_version(path, versions):
     path.joinpath("COLCON_IGNORE").write_text("")
 
 parser = argparse.ArgumentParser()
-parser.add_argument("packages", default="Packages")
-parser.add_argument("workspace", default=".")
+parser.add_argument("workspace")
+parser.add_argument("packages")
 args = parser.parse_args()
 
 versions = collect_versions(args.packages)

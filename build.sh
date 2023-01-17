@@ -39,7 +39,7 @@ mkdir /home/runner/apt_repo
 
 # skip packages without version change
 git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
-python3 $GITHUB_ACTION_PATH/differential.py
+python3 $GITHUB_ACTION_PATH/differential.py . Packages
 
 echo "Add unreleased packages to rosdep"
 
