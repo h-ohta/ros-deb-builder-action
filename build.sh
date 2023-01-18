@@ -45,7 +45,7 @@ echo "Add unreleased packages to rosdep"
 
 git checkout $TARGET_BRANCH
 
-ROSDEP_FILE = $GITHUB_WORKSPACE/rosdep/$ROS_DISTRO.yaml
+ROSDEP_FILE=$GITHUB_WORKSPACE/rosdep/$ROS_DISTRO.yaml
 python3 $GITHUB_ACTION_PATH/update_rosdep.py $ROS_DISTRO src $ROSDEP_FILE
 echo "yaml file://$ROSDEP_FILE $ROS_DISTRO" | sudo tee /etc/ros/rosdep/sources.list.d/1-local.list
 printf "%s" "$ROSDEP_SOURCE" | sudo tee /etc/ros/rosdep/sources.list.d/2-remote.list
