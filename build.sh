@@ -38,10 +38,12 @@ esac
 mkdir /home/runner/apt_repo
 
 # skip packages without version change
-git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
-python3 $GITHUB_ACTION_PATH/differential.py . Packages
+# git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
+# python3 $GITHUB_ACTION_PATH/differential.py . Packages
 
 echo "Add unreleased packages to rosdep"
+
+git checkout $TARGET_BRANCH
 
 ROSDEP_FILE = $GITHUB_WORKSPACE/rosdep/$ROS_DISTRO.yaml
 python3 $GITHUB_ACTION_PATH/update_rosdep.py $ROS_DISTRO src $ROSDEP_FILE

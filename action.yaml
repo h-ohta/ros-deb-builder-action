@@ -5,6 +5,9 @@ branding:
   icon: 'package'
   color: 'green'
 inputs:
+  TARGET_BRANCH:
+    description: The branch name that distributes the packages.
+    required: true
   ROS_DISTRO:
     description: The ROS distribution codename to compile for.
     required: true
