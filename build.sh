@@ -37,10 +37,6 @@ esac
 # make output directory
 mkdir /home/runner/apt_repo
 
-# skip packages without version change
-# git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
-# python3 $GITHUB_ACTION_PATH/differential.py . Packages
-
 echo "Add unreleased packages to rosdep"
 
 git checkout $TARGET_BRANCH
@@ -51,6 +47,10 @@ echo "yaml file://$ROSDEP_FILE $ROS_DISTRO" | sudo tee /etc/ros/rosdep/sources.l
 printf "%s" "$ROSDEP_SOURCE" | sudo tee /etc/ros/rosdep/sources.list.d/2-remote.list
 
 rosdep update
+
+# skip packages without version change
+# git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
+# python3 $GITHUB_ACTION_PATH/differential.py . Packages
 
 echo "Run sbuild"
 
