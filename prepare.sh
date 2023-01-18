@@ -35,6 +35,7 @@ $dsc_dir = "package";
 $unshare_bind_mounts = [ { directory => '/home/runner/.cache/ccache', mountpoint => '/build/ccache' } ];
 EOF
 echo "$SBUILD_CONF" >> ~/.sbuildrc
+echo "\$extra_packages = ['$GITHUB_WORKSPACE/dists/$DEB_DISTRO/universe/binary-amd64'];" >> ~/.sbuildrc
 
 cat ~/.sbuildrc
 
