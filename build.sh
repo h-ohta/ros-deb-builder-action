@@ -42,7 +42,7 @@ echo "Add unreleased packages to rosdep"
 git checkout $TARGET_BRANCH
 
 ROSDEP_FILE="$GITHUB_WORKSPACE/rosdep/$ROS_DISTRO.yaml"
-python3 $GITHUB_ACTION_PATH/update_rosdep.py $ROS_DISTRO src $ROSDEP_FILE
+python3 $GITHUB_ACTION_PATH/update_rosdep.py "$ROS_DISTRO" src "$ROSDEP_FILE"
 
 sudo rosdep init
 echo "yaml file://$ROSDEP_FILE $ROS_DISTRO" | sudo tee /etc/ros/rosdep/sources.list.d/1-local.list
@@ -50,8 +50,7 @@ printf "%s" "$ROSDEP_SOURCE" | sudo tee /etc/ros/rosdep/sources.list.d/2-remote.
 rosdep update
 
 # skip packages without version change
-# git checkout origin/$DEB_DISTRO-$ROS_DISTRO -- Packages
-# python3 $GITHUB_ACTION_PATH/differential.py . Packages
+python3 $GITHUB_ACTION_PATH/select_rospkg.py src "dists/$DEB_DISTRO"
 
 echo "Run sbuild"
 
@@ -89,4 +88,4 @@ done
 ccache -sv
 
 # DEBUG
-ll /home/runner/apt_repo
+ls -l /home/runner/apt_repo
