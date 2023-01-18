@@ -86,6 +86,3 @@ for PKG_PATH in $(colcon list -tp); do
 done
 
 ccache -sv
-
-# DEBUG
-ls -l /home/runner/apt_repo
