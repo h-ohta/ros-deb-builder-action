@@ -44,11 +44,5 @@ vcs import src < "$REPOS_FILE"
 python3 $GITHUB_ACTION_PATH/scripts/apply_repos_config.py "$REPOS_CONF"
 
 # Switch to the target branch to use released packages.
-if git show-ref --quiet --verify "refs/remotes/origin/$TARGET_BRANCH"; then
-  echo "Checkout target branch"
-  git checkout "$TARGET_BRANCH"
-else
-  echo "Create target branch"
-  git checkout --orphan "$TARGET_BRANCH"
-  git rm -rf .
-fi
+echo "Switch to target branch"
+git checkout "$TARGET_BRANCH"
