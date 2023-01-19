@@ -18,9 +18,11 @@ inputs:
     description: Repos file with list of repositories to package.
     required: false
     default: sources.repos
+  REPOS_CONF:
+    description: Repos config.
+    required: true
   SBUILD_CONF:
-    description: Additional sbuild.conf lines. For example EXTRA_REPOSITORIES,
-      or VERBOSE. See man sbuild.conf.
+    description: Additional sbuild.conf lines. For example EXTRA_REPOSITORIES, or VERBOSE. See man sbuild.conf.
     required: false
   ROSDEP_SOURCE:
     description: Additional rosdep sources.
@@ -55,6 +57,7 @@ runs:
         TARGET_BRANCH: ${{ inputs.TARGET_BRANCH }}
         DEB_DISTRO: ${{ inputs.DEB_DISTRO }}
         REPOS_FILE: ${{ inputs.REPOS_FILE }}
+        REPOS_CONF: ${{ inputs.REPOS_CONF }}
         SBUILD_CONF: ${{ inputs.SBUILD_CONF }}
     - name: Create packages
       run: $GITHUB_ACTION_PATH/build.sh
