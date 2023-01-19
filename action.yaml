@@ -52,6 +52,7 @@ runs:
       run: $GITHUB_ACTION_PATH/prepare.sh
       shell: sh
       env:
+        TARGET_BRANCH: ${{ inputs.TARGET_BRANCH }}
         DEB_DISTRO: ${{ inputs.DEB_DISTRO }}
         REPOS_FILE: ${{ inputs.REPOS_FILE }}
         SBUILD_CONF: ${{ inputs.SBUILD_CONF }}
@@ -59,7 +60,6 @@ runs:
       run: $GITHUB_ACTION_PATH/build.sh
       shell: sh
       env:
-        TARGET_BRANCH: ${{ inputs.TARGET_BRANCH }}
         ROS_DISTRO: ${{ inputs.ROS_DISTRO }}
         DEB_DISTRO: ${{ inputs.DEB_DISTRO }}
         ROSDEP_SOURCE: ${{ inputs.ROSDEP_SOURCE }}

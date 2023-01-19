@@ -39,8 +39,6 @@ mkdir /home/runner/apt_repo
 
 echo "Add unreleased packages to rosdep"
 
-git checkout $TARGET_BRANCH
-
 ROSDEP_FILE="$GITHUB_WORKSPACE/rosdep/$ROS_DISTRO.yaml"
 python3 $GITHUB_ACTION_PATH/update_rosdep.py "$ROS_DISTRO" src "$ROSDEP_FILE"
 

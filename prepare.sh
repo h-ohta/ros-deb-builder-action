@@ -30,8 +30,8 @@ chmod -R a+rwX ~/.cache/ccache
 cat << "EOF" > ~/.sbuildrc
 $build_environment = { 'CCACHE_DIR' => '/build/ccache' };
 $path = '/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games';
-$build_path = "/build/package/";
-$dsc_dir = "package";
+$build_path = '/build/package/';
+$dsc_dir = 'package';
 $unshare_bind_mounts = [ { directory => '/home/runner/.cache/ccache', mountpoint => '/build/ccache' } ];
 EOF
 echo "$SBUILD_CONF" >> ~/.sbuildrc
@@ -39,14 +39,17 @@ echo "\$extra_packages = ['$GITHUB_WORKSPACE/dists/$DEB_DISTRO/universe/binary-a
 
 cat ~/.sbuildrc
 
-echo "Checkout workspace"
-
+# Only local file is supported unlike the original code.
+echo "Import source repository"
 mkdir src
-case $REPOS_FILE in
-  http*)
-    curl -sSL "$REPOS_FILE" | vcs import src
-    ;;
-  *)
-    vcs import src < "$REPOS_FILE"
-    ;;
-esac
+vcs import src < "$REPOS_FILE"
+
+# Switch to the target branch to use released packages.
+if git show-ref --quiet --verify "refs/remotes/origin/$TARGET_BRANCH"; then
+  echo "Checkout target branch"
+  git checkout "$TARGET_BRANCH"
+else
+  echo "Create target branch"
+  git checkout --orphan "$TARGET_BRANCH"
+  git rm -rf .
+fi
