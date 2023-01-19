@@ -3,8 +3,10 @@
 
 set -ex
 
+echo "Move packages"
 RELEASE_DIR="dists/$DEB_DISTRO"
 PACKAGE_DIR="dists/$DEB_DISTRO/universe/binary-amd64"
+mkdir -p "$PACKAGE_DIR"
 for file in $(ls /home/runner/apt_repo/*.deb); do mv "$file" "$PACKAGE_DIR"; done
 
 echo "Suite: $DEB_DISTRO" > "$RELEASE_DIR/Release"
