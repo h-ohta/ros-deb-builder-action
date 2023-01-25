@@ -22,7 +22,8 @@ inputs:
     description: Repos config.
     required: true
   SBUILD_CONF:
-    description: Additional sbuild.conf lines. For example EXTRA_REPOSITORIES, or VERBOSE. See man sbuild.conf.
+    description: Additional sbuild.conf lines. For example EXTRA_REPOSITORIES,
+      or VERBOSE. See man sbuild.conf.
     required: false
   ROSDEP_SOURCE:
     description: Additional rosdep sources.
@@ -70,8 +71,8 @@ runs:
       run: $GITHUB_ACTION_PATH/repository.sh
       shell: sh
       env:
-       ROS_DISTRO: ${{ inputs.ROS_DISTRO }}
-       DEB_DISTRO: ${{ inputs.DEB_DISTRO }}
+        ROS_DISTRO: ${{ inputs.ROS_DISTRO }}
+        DEB_DISTRO: ${{ inputs.DEB_DISTRO }}
     - name: Deploy
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
