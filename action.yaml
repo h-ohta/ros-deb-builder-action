@@ -24,8 +24,7 @@ inputs:
   BUILD_DEPENDS_FILE:
     description: Repos file with list of repositories to build.
     required: false
-     default: build_depends.repos
-
+    default: build_depends.repos
   SBUILD_CONF:
     description: Additional sbuild.conf lines. For example EXTRA_REPOSITORIES,
       or VERBOSE. See man sbuild.conf.
