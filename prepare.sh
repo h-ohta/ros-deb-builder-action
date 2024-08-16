@@ -60,7 +60,7 @@ case $BUILD_DEPENDS_FILE in
     ;;
 esac
 
-packages_array=$(colcon list --base_paths src | awk '{print $1}')
+packages_array=$(colcon list --base-paths src | awk '{print $1}')
 for pkg in "${packages_array[@]}"
 do
   build_depends_array=$(colcon info "$pkg" | grep build | awk -F ':' '{print $2}')
