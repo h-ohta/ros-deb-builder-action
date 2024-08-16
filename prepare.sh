@@ -53,4 +53,4 @@ python3 $GITHUB_ACTION_PATH/apply_repos_config.py "$REPOS_CONF"
 
 # Switch to the target branch to use released packages.
 echo "Switch to target branch"
-git checkout "$TARGET_BRANCH"
+git checkout "$TARGET_BRANCH" 2>/dev/null || git checkout -b "$TARGET_BRANCH"
