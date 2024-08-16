@@ -3,15 +3,6 @@
 
 set -ex
 
-case $BUILD_DEPENDS_FILE in
-  http*)
-    curl -sSL "$BUILD_DEPENDS_FILE" | vcs import src
-    ;;
-  *)
-    vcs import src < "$BUILD_DEPENDS_FILE"
-    ;;
-esac
-
 if debian-distro-info --all | grep -q "$DEB_DISTRO"; then
   DISTRIBUTION=debian
 elif ubuntu-distro-info --all | grep -q "$DEB_DISTRO"; then

@@ -49,6 +49,29 @@ case $REPOS_FILE in
     vcs import src < "$REPOS_FILE"
     ;;
 esac
+
+case $BUILD_DEPENDS_FILE in
+  http*)
+    curl -sSL "$BUILD_DEPENDS_FILE" | vcs import depends
+    ;;
+  *)
+    vcs import depends < "$BUILD_DEPENDS_FILE"
+    ;;
+esac
+
+packages_array=$(colcon list --base_paths src | awk '{print $1}')
+for pkg in "${packages_array[@]}"
+do
+  build_depends_array=$(colcon info "$pkg" | grep build | awk -F ':' '{print $2}')
+
+  for elem in "${build_depends_array[@]}"
+  do
+    echo "$elem"
+    path=colcon list --base-paths depends | grep "$elem" | awk '{print $2}'
+    mv "$elem" src/
+  done
+done
+
 python3 $GITHUB_ACTION_PATH/apply_repos_config.py "$REPOS_CONF"
 
 # Switch to the target branch to use released packages.

@@ -71,6 +71,7 @@ runs:
         DEB_DISTRO: ${{ inputs.DEB_DISTRO }}
         REPOS_FILE: ${{ inputs.REPOS_FILE }}
         REPOS_CONF: ${{ inputs.REPOS_CONF }}
+        BUILD_DEPENDS_FILE: ${{ inputs.BUILD_DEPENDS_FILE }}
         SBUILD_CONF: ${{ inputs.SBUILD_CONF }}
     - name: Create packages
       run: $GITHUB_ACTION_PATH/build.sh
@@ -79,7 +80,6 @@ runs:
         ROS_DISTRO: ${{ inputs.ROS_DISTRO }}
         DEB_DISTRO: ${{ inputs.DEB_DISTRO }}
         ROSDEP_SOURCE: ${{ inputs.ROSDEP_SOURCE }}
-        BUILD_DEPENDS_FILE: ${{ inputs.BUILD_DEPENDS_FILE }}
     - name: Create apt repository
       run: $GITHUB_ACTION_PATH/repository.sh
       shell: sh
