@@ -61,8 +61,7 @@ case $BUILD_DEPENDS_FILE in
     ;;
 esac
 
-packages_array=$(colcon list --base-paths src | awk '{print $1}')
-
+packages_array=$(colcon list -tn --base-paths src)
 
 for pkg in ${packages_array[@]}
 do
@@ -70,14 +69,14 @@ do
 
   for elem in ${build_depends_array[@]}
   do
-    echo "$elem"
     path=$(colcon list --base-paths depends | grep "$elem" | awk '{print $2}')
     if [ -n "$path" ];then
       mv "$path" src/
     fi
-    ls src/
   done
 done
+
+rm -rf depends
 
 python3 $GITHUB_ACTION_PATH/apply_repos_config.py "$REPOS_CONF"
 
