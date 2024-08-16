@@ -68,7 +68,8 @@ do
   do
     echo "$elem"
     path=colcon list --base-paths depends | grep "$elem" | awk '{print $2}'
-    mv "$elem" src/
+    mv "$path" src/
+    ls src/
   done
 done
 
