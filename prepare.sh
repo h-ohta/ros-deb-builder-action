@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 # SPDX-License-Identifier: BSD-3-Clause
+# shellcheck disable=SC2068
 
 set -ex
 
@@ -61,15 +62,19 @@ case $BUILD_DEPENDS_FILE in
 esac
 
 packages_array=$(colcon list --base-paths src | awk '{print $1}')
-for pkg in "${packages_array[@]}"
+
+
+for pkg in ${packages_array[@]}
 do
   build_depends_array=$(colcon info "$pkg" | grep build | awk -F ':' '{print $2}')
 
-  for elem in "${build_depends_array[@]}"
+  for elem in ${build_depends_array[@]}
   do
     echo "$elem"
-    path=colcon list --base-paths depends | grep "$elem" | awk '{print $2}'
-    mv "$path" src/
+    path=$(colcon list --base-paths depends | grep "$elem" | awk '{print $2}')
+    if [ -n "$path" ];then
+      mv "$path" src/
+    fi
     ls src/
   done
 done
