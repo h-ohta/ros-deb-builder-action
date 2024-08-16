@@ -43,6 +43,14 @@ runs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Set git config
+      run: |
+        git config --local --unset-all http.https://github.com/.extraheader || true
+        git config --global --add url.https://x-access-token:${{ inputs.GITHUB_TOKEN }}@github.com/.insteadOf 'https://github.com/'
+        git config --global --add url.https://x-access-token:${{ inputs.GITHUB_TOKEN }}@github.com/.insteadOf 'git@github.com:'
+        git config --global user.name github-actions
+        git config --global user.email github-actions@github.com
+      shell: bash
     - name: Cache ccache
       uses: pat-s/always-upload-cache@v3
       with:
