@@ -61,22 +61,22 @@ case $BUILD_DEPENDS_FILE in
     ;;
 esac
 
-packages_array=$(colcon list -tn --base-paths src)
+# packages_array=$(colcon list -tn --base-paths src)
 
-for pkg in ${packages_array[@]}
-do
-  build_depends_array=$(colcon info "$pkg" | grep build | awk -F ':' '{print $2}')
+# for pkg in ${packages_array[@]}
+# do
+#   build_depends_array=$(colcon info "$pkg" | grep build | awk -F ':' '{print $2}')
 
-  for elem in ${build_depends_array[@]}
-  do
-    path=$(colcon list --base-paths depends | grep "$elem" | awk '{print $2}')
-    if [ -n "$path" ];then
-      mv "$path" src/
-    fi
-  done
-done
+#   for elem in ${build_depends_array[@]}
+#   do
+#     path=$(colcon list --base-paths depends | grep "$elem" | awk '{print $2}')
+#     if [ -n "$path" ];then
+#       mv "$path" src/
+#     fi
+#   done
+# done
 
-rm -rf depends
+# rm -rf depends
 
 python3 $GITHUB_ACTION_PATH/apply_repos_config.py "$REPOS_CONF"
 
