@@ -51,15 +51,15 @@ case $REPOS_FILE in
     ;;
 esac
 
-mkdir depends
-case $BUILD_DEPENDS_FILE in
-  http*)
-    curl -sSL "$BUILD_DEPENDS_FILE" | vcs import depends
-    ;;
-  *)
-    vcs import depends < "$BUILD_DEPENDS_FILE"
-    ;;
-esac
+# mkdir depends
+# case $BUILD_DEPENDS_FILE in
+#   http*)
+#     curl -sSL "$BUILD_DEPENDS_FILE" | vcs import depends
+#     ;;
+#   *)
+#     vcs import depends < "$BUILD_DEPENDS_FILE"
+#     ;;
+# esac
 
 # packages_array=$(colcon list -tn --base-paths src)
 
